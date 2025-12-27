@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Container, ProductCard} from "../components/index";
-import { FaArrowRight, FaFire, FaStar, FaTags } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import { useProducts } from "../hooks/useProducts";
 import { Link } from "react-router-dom";
 import {Button, Loader} from "../components/index"
 import { useSelector } from "react-redux";
+
 function Home() {
     const { isAuthenticated } = useSelector((state) => state.auth);
     const [filters, setFilters] = useState({
@@ -19,99 +20,56 @@ function Home() {
     const { products, loading } = useProducts(filters);
 
     const categories = [
-        { name: "Home", icon: "🏠", color: "bg-blue-100 hover:bg-blue-200" },
-        { name: "Fashion", icon: "👗", color: "bg-pink-100 hover:bg-pink-200" },
-        { name: "Toys", icon: "🧸", color: "bg-yellow-100 hover:bg-yellow-200" },
-        { name: "Gadgets", icon: "📱", color: "bg-purple-100 hover:bg-purple-200" },
+        { name: "Home", value: "home" },
+        { name: "Fashion", value: "fashion" },
+        { name: "Toys", value: "toys" },
+        { name: "Gadgets", value: "gadgets" },
     ];
 
-        return (
-        <div className="bg-gradient-to-b from-gray-50 to-white min-h-screen">
+    return (
+        <div className="min-h-screen bg-white">
             {/* Hero Section */}
-            <section className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-20">
+            <section className="bg-gray-900 text-white py-16">
                 <Container>
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h1 className="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">
-                            Welcome to <span className="text-yellow-300">Dreva</span>
+                    <div className="max-w-2xl">
+                        <h1 className="text-4xl font-bold mb-4">
+                            Quality Products, Great Prices
                         </h1>
-                        <p className="text-xl md:text-2xl mb-8 text-gray-100">
-                            Discover premium products at unbeatable prices
+                        <p className="text-lg text-gray-300 mb-6">
+                            Shop the latest products from top brands
                         </p>
-                        <div className="flex gap-4 justify-center">
+                        <div className="flex gap-3">
                             <Link to="/products">
-                                    <Button
-                                        variant="hero"
-                                        className="bg-white text-black hover:bg-gray px-8 py-3 text-lg font-semibold shadow-lg">
-                                    Shop Now <FaArrowRight className="inline ml-2" />
+                                <Button className="bg-white text-gray-900 hover:bg-gray-100 px-6 py-2">
+                                    Shop Now
                                 </Button>
-                                </Link>
-                                
+                            </Link>
                             {!isAuthenticated && (
-                            <Link to="/register">
-                                <Button
-                                    className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg font-semibold">
-                                    Sign Up
-                                </Button>
-                            </Link>)}
-                        </div>
-                    </div>
-                </Container>
-            </section>
-
-            {/* Features Section */}
-            <section className="py-12 bg-white border-b">
-                <Container>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div className="text-center p-6">
-                            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <FaTags className="text-green-600 text-2xl" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">Best Prices</h3>
-                            <p className="text-gray-600">Competitive prices on all products</p>
-                        </div>
-                        <div className="text-center p-6">
-                            <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <FaStar className="text-blue-600 text-2xl" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">Quality Products</h3>
-                            <p className="text-gray-600">Only the best quality items</p>
-                        </div>
-                        <div className="text-center p-6">
-                            <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <FaFire className="text-purple-600 text-2xl" />
-                            </div>
-                            <h3 className="text-xl font-bold mb-2">Fast Delivery</h3>
-                            <p className="text-gray-600">Quick and reliable shipping</p>
+                                <Link to="/register">
+                                    <Button className="bg-transparent border border-white text-white hover:bg-white hover:text-gray-900 px-6 py-2">
+                                        Sign Up
+                                    </Button>
+                                </Link>
+                            )}
                         </div>
                     </div>
                 </Container>
             </section>
 
             {/* Categories Section */}
-            <section className="py-16 bg-gray-50">
+            <section className="py-12 border-b">
                 <Container>
-                    <div className="text-center mb-12">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">
-                            Shop by Category
-                        </h2>
-                        <p className="text-gray-600 text-lg">
-                            Browse through our wide range of categories
-                        </p>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <h2 className="text-2xl font-semibold mb-6">Shop by Category</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {categories.map((category) => (
                             <Link
                                 key={category.value}
                                 to={`/products?category=${category.value}`}
-                                className={`${category.color} p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2`}
+                                className="border rounded-lg p-6 hover:border-gray-900 hover:shadow-sm transition-all"
                             >
-                                <div className="text-center">
-                                    <div className="text-6xl mb-4">{category.icon}</div>
-                                    <h3 className="text-xl font-bold text-gray-900">
-                                        {category.label}
-                                    </h3>
-                                </div>
+                                <h3 className="text-lg font-medium text-gray-900">
+                                    {category.name}
+                                </h3>
                             </Link>
                         ))}
                     </div>
@@ -119,20 +77,13 @@ function Home() {
             </section>
 
             {/* Featured Products Section */}
-            <section className="py-16 bg-white">
+            <section className="py-12">
                 <Container>
-                    <div className="flex items-center justify-between mb-12">
-                        <div>
-                            <h2 className="text-4xl font-bold text-gray-900 mb-2">
-                                Featured Products
-                            </h2>
-                            <p className="text-gray-600 text-lg">
-                                Check out our latest and greatest items
-                            </p>
-                        </div>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-2xl font-semibold">Featured Products</h2>
                         <Link to="/products">
-                            <Button className="flex items-center gap-2">
-                                View All <FaArrowRight />
+                            <Button className="flex items-center gap-2 text-sm">
+                                View All <FaArrowRight className="text-xs" />
                             </Button>
                         </Link>
                     </div>
@@ -140,10 +91,8 @@ function Home() {
                     {loading ? (
                         <Loader />
                     ) : products.length === 0 ? (
-                        <div className="text-center py-20">
-                            <div className="text-6xl mb-4">📦</div>
-                            <p className="text-2xl text-gray-600 mb-4">No products available yet</p>
-                            <p className="text-gray-500">Check back soon for amazing deals!</p>
+                        <div className="text-center py-16">
+                            <p className="text-lg text-gray-600">No products available</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -154,34 +103,8 @@ function Home() {
                     )}
                 </Container>
             </section>
-
-            {/* CTA Section */}
-            {!isAuthenticated && (<section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                <Container>
-                    <div className="max-w-3xl mx-auto text-center">
-                        <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                            Ready to Start Shopping?
-                        </h2>
-                        <p className="text-xl mb-8 text-gray-100">
-                            Join thousands of happy customers today
-                        </p>
-                        <Link to="/register">
-                                <Button
-                                    variant="hero"
-                                    className="bg-white text-black hover:bg-gray-100 px-10 py-4 text-lg font-semibold shadow-xl">
-                                Create Free Account
-                            </Button>
-                        </Link>
-                    </div>
-                </Container>
-            </section>
-            )}
         </div>
     );
-
-
-
 }
 
 export default Home;
-
