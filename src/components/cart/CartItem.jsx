@@ -15,7 +15,8 @@ function CartItem({ item }) {
     }
 
     return (
-        <div className="flex items-center gap-4 bg-white p-4 mb-4 rounded-lg shadow-md border border-gray-200">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 bg-white p-4 mb-4 rounded-lg shadow-md border border-gray-200">
+            <div className="flex items-center gap-4 flex-1">
             {/* Product Img */}
             <img
                 src={item.image || "/placeholder.jpg"}
@@ -28,7 +29,9 @@ function CartItem({ item }) {
                 <h3 className="font-semibold text-lg text-gray-800 truncate">{item.name}</h3>
                 <p className="text-gray-600 font-medium">₹{item.price?.toLocaleString()}</p>
             </div>
+            </div>
 
+            <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6 border-t md:border-t-0 pt-3 md:pt-0">
             {/* Quantity Control  */}
             <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 ">
                 <Button
@@ -64,6 +67,7 @@ function CartItem({ item }) {
             >
                 <FaTrash />
             </Button>
+        </div>
         </div>
     );
 }
